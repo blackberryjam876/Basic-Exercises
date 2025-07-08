@@ -1,35 +1,40 @@
 """ write a function to split a string 
 of words separated by commas and spaces into two lists, words and separators."""
 
+import sys 
+from typing import List, Tuple
 
-def splitter(text):
-    listword = []
-    listsep = []
-    for i in range(len(text)):
-        if text[i] == " " or text[i] == ",":
-            
-            listsep.append(text[i])
-            listword.append(text[:i])
-            listword.append(text[(i+1):])
-            break
+def splitter(text: str) -> Tuple[List[str], List[str]]:
+    words: list[str] = []
+    seps: list[str] = []
+    buffer: list[str] = []
 
+    for ch in text:
+        if ch == ' ' or ch == ',':
+            # end of a word; append and reset buffer
+            words.append(''.join(buffer))
+            seps.append(ch)
+            buffer.clear()
         else:
-            continue
-    for i in range(len(text)):
-        if text[i] == ",":
-            listsep.append(",")
-            for j in range(len(listword)):
-                if "," in listword[j]:
-                    temp = str(listword[j])
-                    for k in range(len(temp)):
-                        if temp[k] == ",":    
-                            t = temp[:k] + temp[(k+1):]
-                            listword[j] = t
+            buffer.append(ch)
 
+    if buffer:
+        words.append(''.join(buffer))
 
+    return words, seps
 
-    print("Your separator is " + str(listsep) + "and the words are: " + str(listword))
-         
+def main() -> None:
+    try:
+        user_input = input("Enter text to split (by spaces and commas): ")
+    except EOFError:
+        print("No input provided. Exiting.", file=sys.stderr)
+        sys.exit(1)
 
-splitter("apple, orange  blue,")
+    words, seps = splitter(user_input)
+
+    print("\nWords:", words)
+    print("Separators:", seps)
+
+if __name__ == '__main__':
+    main()
 

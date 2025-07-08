@@ -1,29 +1,28 @@
 """print the entry with the highest number of unique characters"""
 def uniquee(arr):
-    k =0
-    counts = []
-    for i in range(len(arr)):
-        y = arr[i]
-        #print(y)
-        k=0
-        for j in range(len(y)):
+    if not arr:
+        print("Input list is empty.")
+        return
+    
+    non_empty = [s for s in arr if s != ""]
 
-            if y[j] in (y[:j] or y[(j+1):]):
-                k = k+1
-            else:
-                continue
-        if k != None:
-            print ("repetion for: " + arr[i] + " with " + str(k) + " repeated chars.")
-            counts.append(k)
-       
-    if k != None:
-        indmax = counts.index(max(counts))
-        indmin = counts.index(min(counts))
-        print("Item with the most repeated chars is: " + arr[indmax])
-        print("Item with the most unique chars is: " + arr[indmin])
+    if not non_empty:
+        print("No non‐empty strings in the input.")
+        return
+    
+    repeat_counts = []
+    unique_counts = []
+    for s in non_empty:
+        rep = sum(1 for ch in s if s.count(ch) > 1)
+        repeat_counts.append(rep)
+        unique_counts.append(len(set(s)))
+
+    idx_most_repeats = repeat_counts.index(max(repeat_counts))
+    idx_most_unique  = unique_counts.index(max(unique_counts))
+    print(f"Item with the most repeated chars is: {non_empty[idx_most_repeats]!r}")
+    print(f"Item with the most unique chars is:  {non_empty[idx_most_unique]!r}")
         
-    else:
-        print("All content is unique.")
-
-
+#Examples
 uniquee(["abc", "apple","strawberry", " "])
+
+uniquee(["", "a", "aa", "abcd", "aabbcc","aabbccghjkl"])

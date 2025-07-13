@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../IOT-Sensor-Data-Lakehouse"
+        },
+        {
+            "path": "../Serverless-Logs"
+        },
+        {
+            "path": "../SentimentAnalyzer"
+        }
+    ]
+}
